@@ -1,0 +1,9 @@
+# Wiki 系统定时任务
+# 挂载到 Docker 容器内，通过 crond 执行
+# 必须以 node 用户运行（claude CLI 拒绝 root）
+
+# 每日凌晨 2:30 运行 Dream 模式（知识巩固）
+30 2 * * * su node -c 'cd /app && npx tsx .vitepress/scripts/dream-runner.ts --cron' >> /app/data/dream.log 2>&1
+
+# 每周日凌晨 4:00 运行 Lint（知识库健康检查）
+0 4 * * 0 su node -c 'cd /app && npx tsx .vitepress/scripts/wiki-lint.ts' >> /app/data/lint.log 2>&1

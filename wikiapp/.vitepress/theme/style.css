@@ -1,0 +1,217 @@
+/* ========================================
+   Wiki Design System — Editorial Minimal
+   ======================================== */
+
+/* Wiki link styling */
+.wiki-link {
+  color: var(--vp-c-brand-1);
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.15s;
+}
+
+.wiki-link:hover {
+  opacity: 0.75;
+}
+
+.wiki-link.broken {
+  color: var(--vp-c-text-3);
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+/* External link indicator */
+.vp-doc a[href^="http"]:not([href*="localhost"]):not(.wiki-link)::after {
+  content: "↗";
+  font-size: 0.65em;
+  margin-left: 2px;
+  opacity: 0.4;
+  display: inline-block;
+  vertical-align: super;
+}
+
+/* Graph container */
+.graph-container {
+  width: 100%;
+  height: 600px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--vp-c-bg);
+}
+
+.graph-container svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Tag cloud */
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag-item {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 450;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: 1px solid transparent;
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-2);
+}
+
+.tag-item:hover {
+  color: var(--vp-c-brand-1);
+  border-color: var(--vp-c-brand-soft);
+}
+
+.tag-item.active {
+  background: var(--vp-c-brand-1);
+  color: white;
+  border-color: var(--vp-c-brand-1);
+}
+
+.tag-count {
+  margin-left: 4px;
+  font-size: 11px;
+  opacity: 0.5;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Page cards */
+.page-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+.page-card {
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 10px;
+  padding: 16px;
+  transition: all 0.15s;
+  background: var(--vp-c-bg-soft);
+  text-decoration: none;
+  display: block;
+}
+
+.page-card:hover {
+  border-color: var(--vp-c-brand-soft);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
+}
+
+.page-card h3 {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.page-card p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--vp-c-text-2);
+  line-height: 1.5;
+}
+
+.page-card .card-meta {
+  margin-top: 10px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.page-card .card-tag {
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: var(--vp-c-default-soft);
+  color: var(--vp-c-text-3);
+}
+
+/* Category badge */
+.category-badge {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.category-badge.entities {
+  background: rgba(59, 130, 246, 0.08);
+  color: #3b82f6;
+}
+.dark .category-badge.entities {
+  background: rgba(59, 130, 246, 0.12);
+  color: #60a5fa;
+}
+
+.category-badge.topics {
+  background: rgba(34, 197, 94, 0.08);
+  color: #16a34a;
+}
+.dark .category-badge.topics {
+  background: rgba(34, 197, 94, 0.12);
+  color: #4ade80;
+}
+
+.category-badge.comparisons {
+  background: rgba(245, 158, 11, 0.08);
+  color: #d97706;
+}
+.dark .category-badge.comparisons {
+  background: rgba(245, 158, 11, 0.12);
+  color: #fbbf24;
+}
+
+/* Stats grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.stat-card {
+  text-align: center;
+  padding: 16px;
+  border-radius: 10px;
+  background: var(--vp-c-bg-soft);
+}
+
+.stat-number {
+  font-size: 28px;
+  font-weight: 300;
+  font-variant-numeric: tabular-nums;
+  color: var(--vp-c-text-1);
+  letter-spacing: -0.5px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--vp-c-text-3);
+  margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .page-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .graph-container {
+    height: 400px;
+  }
+}

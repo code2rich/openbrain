@@ -1,0 +1,45 @@
+services:
+  wiki:
+    build: .
+    image: wikiapp-wiki:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ../99-wiki:/wiki-content
+      - ../00-raw:/raw-content:ro
+    environment:
+      - WIKI_DIR=/wiki-content
+      - RAW_DIR=/raw-content
+    command: ["scripts/dev.sh"]
+    restart: unless-stopped
+
+  api:
+    build: .
+    image: wikiapp-api:latest
+    ports:
+      - "3456:3456"
+    volumes:
+      - ../99-wiki:/wiki-content
+      - ../00-raw:/raw-content
+      - ../100-output:/output-content
+      - ./data:/app/data
+      # Claude Code 配置：skills + rules + CLAUDE.md
+      - ../00-ai-repo/01_claude/skills:/home/node/.claude/skills:ro
+      - ../00-ai-repo/01_claude/rules:/home/node/.claude/rules:ro
+      - ../00-ai-repo/01_claude/CLAUDE.md:/home/node/.claude/CLAUDE.md:ro
+      # Obsidian vault 的 CLAUDE.md（知识库规则）
+      - ../CLAUDE.md:/app/CLAUDE.md:ro
+      # [可选] Session monitoring — 取消注释以启用 Claude session 持久化
+      # - ~/.claude/projects:/claude-sessions-host:ro
+      # - ./data/claude-sessions:/home/node/.claude/projects
+      # Crontab 定时任务
+      - ./.vitepress/scripts/crontab:/tmp/dream-crontab:ro
+    environment:
+      - WIKI_DIR=/wiki-content
+      - RAW_DIR=/raw-content
+      - OUTPUT_DIR=/output-content
+      - HOME=/home/node
+      # - CLAUDE_SESSIONS_HOST=/claude-sessions-host
+    user: "0:0"
+    command: ["sh", "-c", "mkdir -p /var/spool/cron/crontabs && cp /tmp/dream-crontab /var/spool/cron/crontabs/root && crond && su node -c 'npx tsx .vitepress/scripts/ingest-api.ts'"]
+    restart: unless-stopped

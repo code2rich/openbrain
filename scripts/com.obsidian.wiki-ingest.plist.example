@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.obsidian.wiki-ingest</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/code2rich/Library/Mobile Documents/com~apple~CloudDocs/code2rich/obsidian/scripts/wiki-cli.sh</string>
+        <string>ingest</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/code2rich/Library/Mobile Documents/com~apple~CloudDocs/code2rich/obsidian</string>
+
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>2</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/Users/code2rich/.local/bin:/usr/local/bin:/usr/bin:/bin</string>
+        <key>HOME</key>
+        <string>/Users/code2rich</string>
+    </dict>
+
+    <key>StandardOutPath</key>
+    <string>/tmp/obsidian-wiki-ingest.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/tmp/obsidian-wiki-ingest.err</string>
+</dict>
+</plist>
