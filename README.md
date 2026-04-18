@@ -48,10 +48,15 @@ OpenBrain 把 AI 当作「永不疲倦的知识管理员」，而非搜索引擎
 git clone https://github.com/your-username/openbrain.git
 cd openbrain
 
+# ⚠️ 必须执行：初始化目录结构（创建 00-raw 子目录、99-wiki 索引文件等）
+bash scripts/init-dirs.sh
+
 # Web 展示系统（推荐 Docker）
 cd wikiapp
 docker compose up -d --build
 ```
+
+> **重要**：`bash scripts/init-dirs.sh` 是克隆后必须执行的第一步。它创建被 `.gitignore` 排除的运行时目录和初始文件（`99-wiki/index.md`、`99-wiki/log.md`、`.env` 等）。不执行会导致 wiki-cli.sh 和 wikiapp 功能异常。
 
 访问 `http://localhost:8080` 查看 Wiki，`http://localhost:3456` 是摄入 API。
 
