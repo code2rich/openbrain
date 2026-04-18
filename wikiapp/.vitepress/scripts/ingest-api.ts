@@ -131,7 +131,8 @@ const fastify = Fastify({ logger: true })
 
 await fastify.register(fastifyCors, {
   origin: true,
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS']
 })
 
 await fastify.register(fastifyMultipart, {
@@ -549,7 +550,7 @@ insights: []
     if (config.baseURL) spawnEnv.ANTHROPIC_BASE_URL = config.baseURL
 
     // 构建 claude CLI 参数
-    const claudeArgs = ['--print', '--output-format', 'stream-json']
+    const claudeArgs = ['--print', '--output-format', 'stream-json', '--verbose']
     if (config.model) {
       claudeArgs.push('--model', config.model)
     }

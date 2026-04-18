@@ -594,6 +594,7 @@ export function registerOutputRoutes(
       const claudeArgs = [
         '--print',
         '--output-format', 'stream-json',
+        '--verbose',
       ]
       if (config.model) claudeArgs.push('--model', config.model)
       claudeArgs.push('--dangerously-skip-permissions')
