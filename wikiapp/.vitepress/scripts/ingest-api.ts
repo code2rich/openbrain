@@ -656,15 +656,29 @@ insights: []
       })
     })
 
+    // 从 stream-json stdout 中提取最终 result 文本
+    let finalResult = ''
+    for (const line of result.split('\n')) {
+      if (!line.trim()) continue
+      try {
+        const event = JSON.parse(line)
+        if (event.type === 'result' && event.result) {
+          finalResult = String(event.result)
+        }
+      } catch { /* non-JSON line, skip */ }
+    }
+    // 如果没找到 result 事件，降级用原始 stdout（兼容 text 模式）
+    const wikiOutput = finalResult || result
+
     sendProgress(`✅ claude CLI 分析完成`)
-    sendProgress(`📄 输出长度: ${result.length} 字符`)
+    sendProgress(`📄 输出长度: ${wikiOutput.length} 字符`)
 
     // 存储完整输出以便查看会话过程
-    task.claudeOutput = result
+    task.claudeOutput = wikiOutput
     saveTasksToDisk()
 
     // 提取 wiki 内容并保存
-    let wikiContent = result
+    let wikiContent = wikiOutput
 
     // 从输出中提取分类和文件名（AI 在第一行用 JSON 注释标注）
     let category = task.targetCategory
@@ -682,6 +696,13 @@ insights: []
 
     // 如果没有指定分类，默认 02-topics
     if (!category) category = '02-topics'
+
+    // 剥掉 LLM 可能包裹的代码块（```markdown / ```yaml / ```）
+    wikiContent = wikiContent.replace(/^```(?:markdown|yaml|yml|md)?\s*\n/i, '')
+    wikiContent = wikiContent.replace(/\n```\s*$/m, '')
+
+    // 移除 LLM 在 frontmatter 后追加的尾部分类说明
+    wikiContent = wikiContent.replace(/\n---\n\n\*\*分类判断.*$/s, '')
 
     // 提取 frontmatter 部分
     if (!wikiContent.startsWith('---')) {
