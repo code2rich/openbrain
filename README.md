@@ -45,7 +45,7 @@ OpenBrain 把 AI 当作「永不疲倦的知识管理员」，而非搜索引擎
 ### 安装
 
 ```bash
-git clone https://github.com/your-username/openbrain.git
+git clone https://github.com/code2rich/openbrain.git
 cd openbrain
 
 # ⚠️ 必须执行：初始化目录结构（创建 00-raw 子目录、99-wiki 索引文件等）
