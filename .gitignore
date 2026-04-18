@@ -20,10 +20,17 @@ Thumbs.db
 *.tmp
 *.bak
 
-# 个人数据（不纳入开源）
-00-raw/
+# 个人数据（不纳入开源，保留 README.md 以维持目录结构）
+00-raw/*
+!00-raw/README.md
+99-wiki/*
+!99-wiki/README.md
+100-output/*
+!100-output/README.md
+wikiapp/data/*
+!wikiapp/data/README.md
+wikiapp/wiki/
 .env
-wikiapp/data/config.json
 
 # Python
 __pycache__/
