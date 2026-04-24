@@ -24,7 +24,7 @@ docker compose up -d --build
 
 启动后访问：
 - **Wiki 站点**：http://localhost:8080
-- **摄入 API**：http://localhost:3456
+- **摄入 API**：http://localhost:3457
 
 ## 开发命令
 

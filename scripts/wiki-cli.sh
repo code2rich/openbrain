@@ -6,6 +6,9 @@ set -euo pipefail
 VAULT_ROOT="${VAULT_ROOT:-$(cd "$(dirname "$0")/.." && pwd)}"
 RAW_DIR="$VAULT_ROOT/00-raw"
 WIKI_DIR="$VAULT_ROOT/99-wiki"
+API_PORT="${API_PORT:-3457}"
+# 从 .env 加载配置（如果存在）
+[ -f "$VAULT_ROOT/.env" ] && source <(grep -v '^#' "$VAULT_ROOT/.env" | grep '=' | sed 's/^/export /')
 LOG_FILE="/tmp/wiki-cli.log"
 TODAY=$(date +%Y-%m-%d)
 
@@ -86,7 +89,7 @@ cmd_ingest() {
 # ── lint：知识库健康检查 ────────────────────────────────────────
 cmd_lint() {
   log "启动知识库健康检查..."
-  local api_url="http://localhost:3456/api/lint/run"
+  local api_url="http://localhost:${API_PORT}/api/lint/run"
   local response
   response=$(curl -s -X POST "$api_url" -H 'Content-Type: application/json' -d '{}' 2>/dev/null || echo '{"error":"API 未响应"}')
   if echo "$response" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('result',{}).get('summary','API 返回异常'))" 2>/dev/null; then
@@ -146,7 +149,7 @@ cmd_maintain() {
 # ── dream：触发 Dream 模式 ──────────────────────────────────────
 cmd_dream() {
   log "触发 Dream 模式..."
-  local api_url="http://localhost:3456/api/dream/start"
+  local api_url="http://localhost:${API_PORT}/api/dream/start"
   local response
   response=$(curl -s -X POST "$api_url" 2>/dev/null || echo '{"error":"API 未响应"}')
   echo "$response" | python3 -c "

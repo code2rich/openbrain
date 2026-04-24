@@ -60,7 +60,7 @@ wikiapp/ingest.md             → /ingest（知识摄入入口）
 ```
 ┌─────────────┐     ┌──────────────┐     ┌─────────────┐
 │  Vue 前端   │ ──► │  Fastify API  │ ──► │   文件系统   │
-│  (/ingest)  │     │  (端口 3456)  │     │  00-raw/    │
+│  (/ingest)  │     │  (端口 3457)  │     │  00-raw/    │
 └─────────────┘     │  Docker 容器  │     └─────────────┘
                     └──────────────┘
                            │
@@ -73,7 +73,7 @@ wikiapp/ingest.md             → /ingest（知识摄入入口）
 Docker 容器 (端口 8080)：
   VitePress 静态站点
 
-Docker 容器 (端口 3456)：
+Docker 容器 (端口 3457)：
   Fastify API + Anthropic SDK
 ```
 

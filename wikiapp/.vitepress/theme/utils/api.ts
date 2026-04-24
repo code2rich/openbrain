@@ -1,9 +1,9 @@
 // 运行时动态检测 API 地址
-// 本地访问 localhost:8080 → http://localhost:3456
-// 远程访问 192.168.1.x:8080 → http://192.168.1.x:3456
-// 也可通过 <script>window.__API_BASE__ = '...'</script> 覆盖
+// 端口由环境变量 API_PORT（.env）驱动，通过 VITE_API_PORT 注入前端
+const API_PORT = import.meta.env.VITE_API_PORT || '3457'
+
 export function getApiBase(): string {
-  if (typeof window === 'undefined') return 'http://localhost:3456'
+  if (typeof window === 'undefined') return `http://localhost:${API_PORT}`
   if ((window as any).__API_BASE__) return (window as any).__API_BASE__
-  return `${window.location.protocol}//${window.location.hostname}:3456`
+  return `${window.location.protocol}//${window.location.hostname}:${API_PORT}`
 }

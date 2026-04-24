@@ -122,8 +122,9 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import { getApiBase } from '../utils/api'
 
-const API_BASE = `${window.location.protocol}//${window.location.hostname}:3456`
+const API_BASE = getApiBase()
 
 interface SessionInfo {
   id: string
